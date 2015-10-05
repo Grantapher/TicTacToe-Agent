@@ -1,0 +1,45 @@
+div {
+    border: 1px solid black;
+    background-color: lightsteelblue;
+    height: 330px;
+    width: 330px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+div div {
+    border: 5px solid steelblue;
+    height: 306px;
+    width: 306px;
+    display: inline-block;
+}
+
+div div div{
+    border: 1px solid black;
+    font: 90px arial;
+    color: lightslategrey;
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+
+.X {
+    color: red;
+}
+
+.O {
+    color: blue;
+}
+
+.button {
+    border: 1px solid black;
+    background-color:lightcoral;
+    color: red;
+    border-radius: 4px;
+    font: 20px arial;
+    margin-top:5px;
+    padding-top: 5px;
+    display:block;
+    height: 30px;
+    width: 120px;
+}
