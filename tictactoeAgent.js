@@ -109,9 +109,13 @@ Agent.prototype.findForkBlock = function(board, theirCells, myCells) {
 	// Corner Overload Fork
 	// Looks for this scenario in all 4 rotations
 	//
-	//	|     |     |  X  |  X  | OX  |
-	//	| X   | XO  | XO  | XO  | XO  |
-	//	|     |     |     |  ^  |     |
+	//                            | XO  | Good
+	//                            | OX  |
+	//	|     |     |  X  |  X  | |     | Shuts down opponent and forces a block
+	//	| X   | XO  | XO  | XO  | 
+	//	|     |     |     |     | |  X  | XX  | Bad
+	//                            | XO  | XO  | Normal choice is random corner
+	//                            |   O |   O | Opponent blocks AND sets up a fork
 	//
 	// Makes sure to plug this fork
 
@@ -153,9 +157,13 @@ Agent.prototype.findForkBlock = function(board, theirCells, myCells) {
 	// Opposite Corners Fork
 	// Looks for this scenario in both rotations
 	//
-	//	|     |     |   X |   X |
-	//	|     |  O  |  O  |  O  |
-	//	| X   | X   | X^  | XO  |
+	//                      |   X | Good
+	//                      |  O  | 
+	//	|     |     |   X | | XO  | Forces opponent to block
+	//	|     |  O  |  O  |
+	//	| X   | X   | X   | | O X | O X | Bad
+	//                      |  O  |  O  | Normal choice is random corner
+	//                      | X   | X X | Opponent blocks AND sets up a fork
 	//
 	// Makes sure to plug this fork by picking any side
 	
