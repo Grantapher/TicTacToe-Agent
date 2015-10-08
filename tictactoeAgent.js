@@ -1,16 +1,41 @@
-// Tic Tac Toe
-/* 
-var Agent = function () {}
-
-Agent.prototype.selectMove = function(board) {
-    var freeCells = [];
-    for (var i = 1; i < 10; i++) {
-        if (board.cellFree(i)) freeCells.push(i);
-    }
-
-    return freeCells[Math.floor(Math.random() * freeCells.length)];
-}
+/*
+	8 1 6
+	3 5 7
+	4 9 2
 */
+
+//This agent will go in the order of the choice queue and then choose randomly after.
+//If the other player takes one of the queue's choices, then it will choose randomly that turn instead.
+
+var TestAgent = function() {
+	this.originalQueue = [4, 6]; //CHANGE THIS ARRAY
+	this.choiceQueue = this.originalQueue.slice(0); //clones array
+	this.previousFreeCells = 9;
+}
+
+TestAgent.prototype.selectMove = function(board) {
+	//if the game has reset, reset the queue.
+	var numFreeCells = getNumFreeCells(board);
+	if(this.previousFreeCells < numFreeCells) {
+		this.choiceQueue = this.originalQueue.slice(0); //clones array
+	}
+	this.previousFreeCells = numFreeCells;
+	
+	//select move
+	var queueChoice = this.choiceQueue.shift();
+	if(undefined != queueChoice && board.cellFree(queueChoice)) {
+		return queueChoice;
+	} else {
+		var freeCells = [];
+		for (var i = 1; i < 10; i++) {
+			if (board.cellFree(i)) freeCells.push(i);
+		}
+
+		return freeCells[Math.floor(Math.random() * freeCells.length)];
+	}
+}
+
+//Solved Agent
 
 var Agent = function() {
 	this.corners = [8, 6, 4, 2];
@@ -64,13 +89,7 @@ Agent.prototype.selectMove = function(board) {
 }
 
 Agent.prototype.getPlayerLetter = function(board) {
-	var freeCellCount = 0;
-    for (var i = 1; i < 10; i++) {
-		if(board.cellFree(i)) {
-			freeCellCount++;
-		}
-	}
-	return freeCellCount % 2 == 1 ? "X" : "O";
+	return getNumFreeCells(board) % 2 == 1 ? "X" : "O";
 }
 
 Agent.prototype.findWinningCell = function(board, playerCells) {
@@ -121,7 +140,7 @@ Agent.prototype.findForkBlock = function(board, theirCells, myCells) {
 				if(index >= 0) {
 					//corner is overloaded, fill the corner if possible
 					var secondCell = theirCells[index];
-					var overloadString = [firstCell, secondCell].sort().join();
+					var overloadString = [firstCell, secondCell].sort().join("");
 					var overloadCorner = overloadChoices[overloadString];
 					if(board.cellFree(overloadCorner)) {
 						return overloadCorner;
@@ -174,4 +193,14 @@ Agent.prototype.chooseOppositeCorner = function(board, theirCells) {
 		}
 	}
 	return -1;
+}
+
+var getNumFreeCells = function (board) {
+	var freeCellCount = 0;
+    for (var i = 1; i < 10; i++) {
+		if(board.cellFree(i)) {
+			freeCellCount++;
+		}
+	}
+	return freeCellCount
 }
