@@ -21,6 +21,7 @@ div div div{
     width: 100px;
     height: 100px;
     float: left;
+    cursor: pointer;
 }
 
 .X {
@@ -42,4 +43,5 @@ div div div{
     display:block;
     height: 30px;
     width: 120px;
+    cursor: pointer;
 }
