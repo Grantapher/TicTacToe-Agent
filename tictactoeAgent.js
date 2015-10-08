@@ -202,5 +202,5 @@ var getNumFreeCells = function (board) {
 			freeCellCount++;
 		}
 	}
-	return freeCellCount
+	return freeCellCount;
 }
