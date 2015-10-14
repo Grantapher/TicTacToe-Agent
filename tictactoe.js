@@ -1,3 +1,8 @@
+var xWinColor = "#800000";
+var oWinColor = "#000038";
+var xDrawColor = "#B25858"
+var oDrawColor = "#6d6da0";
+
 // Tic Tac Toe
 var GameBoard = function () {
     this.cells = [];
@@ -43,16 +48,23 @@ GameBoard.prototype.gameOver = function () {
         for (var i = 0; i < this.X.length - 2; i++) {
             for (var j = i + 1; j < this.X.length - 1; j++) {
                 for (var k = j + 1; k < this.X.length; k++) {
-                    if (this.X[i] + this.X[j] + this.X[k] === 15) Xwin = true;
+                    if (this.X[i] + this.X[j] + this.X[k] === 15) {
+                        Xwin = true;
+                        this.Xwin([this.X[i], this.X[j], this.X[k]]);
+                    }
                 }
             }
         }
     }
+
     if (this.O.length > 2) {
         for (var i = 0; i < this.O.length - 2; i++) {
             for (var j = i + 1; j < this.O.length - 1; j++) {
                 for (var k = j + 1; k < this.O.length; k++) {
-                    if (this.O[i] + this.O[j] + this.O[k] === 15) Owin = true;
+                    if (this.O[i] + this.O[j] + this.O[k] === 15){
+                        Owin = true;
+                        this.Owin([this.O[i], this.O[j], this.O[k]]);
+                    }
                 }
             }
         }
@@ -60,8 +72,32 @@ GameBoard.prototype.gameOver = function () {
     if (this.X.length + this.O.length === 9) draw = true;
     if (Xwin) return 1;
     if (Owin) return 2;
-    if (draw) return 3;
+    if (draw) {
+        this.draw();
+        return 3;
+    }
     return 0;
+};
+
+GameBoard.prototype.draw = function () {
+    for(var i = 1; i <= 9; i++) {
+        var e = document.getElementById(i.toString());
+        e.style.color = e.className == "X" ? xDrawColor : oDrawColor;
+    }
+};
+
+GameBoard.prototype.Xwin = function (winCells) {
+    winCells.forEach( function (cell) {
+        var e = document.getElementById(cell);
+        e.style.color = xWinColor;
+    });
+};
+
+GameBoard.prototype.Owin = function (winCells) {
+    winCells.forEach( function (cell) {
+        var e = document.getElementById(cell);
+        e.style.color = oWinColor;
+    });
 };
 
 GameBoard.prototype.reset = function () {
@@ -69,6 +105,7 @@ GameBoard.prototype.reset = function () {
         var c = this.cells[i];
         c.className = "";
         c.innerHTML = i + 1;
+        c.style.color = '';
     }
     this.X = [];
     this.O = [];
